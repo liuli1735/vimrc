@@ -72,9 +72,9 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'scrooloose/syntastic'
 
 "auto-completion stuff
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
+
 "code folding
 Plugin 'tmhedberg/SimpylFold'
 
