@@ -42,10 +42,10 @@ call vundle#rc('$VIM/vimfiles/bundle/')
 
 Plugin 'VundleVim/Vundle.vim'
 
-Bundle 'drmingdrmer/xptemplate'
-Bundle 'ctags.exe'
-Bundle 'taglist.vim'
-Bundle 'Vim-R-plugin'
+Plugin 'drmingdrmer/xptemplate'
+Plugin 'ctags.exe'
+Plugin 'taglist.vim'
+Plugin 'Vim-R-plugin'
 
 "git interface
 Plugin 'tpope/vim-fugitive'
@@ -55,25 +55,17 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'kien/ctrlp.vim' 
 
-"latex
-Bundle 'jcf/vim-latex'
-
-"markdown
-Bundle 'plasticboy/vim-markdown'
-
-"html
-Plugin 'jtratner/vim-flavored-markdown'
-Plugin 'suan/vim-instant-markdown'
-Plugin 'nelstrom/vim-markdown-preview'
-
 "python sytax checker
 Plugin 'nvie/vim-flake8'
-Plugin 'vim-scripts/indentpython.vim'
+Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/syntastic'
+
+"buffer
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 "auto-completion stuff
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'davidhalter/jedi-vim'
 
 "code folding
 Plugin 'tmhedberg/SimpylFold'
@@ -177,15 +169,13 @@ set clipboard+=unnamed
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8
 lang messages zh_CN.UTF-8
-set fileencodings=utf-8,chinese,latin-1
-if has("win32")
-    set fileencoding=chinese
-else
-    set fileencoding=utf-8
-endif
+set fileencodings=ucs-bom,utf-8,chinese,latin-1
+set fileencoding=utf-8
 
 syntax enable
-set guifont=Consolas:h12
+
+"set guifont=Consolas:h11
+set guifont=Consolas\ for\ Powerline\ FixedD:h11
 set guifontwide=Yahei_Mono:h11
 
 if has('gui_running')
@@ -338,35 +328,93 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-scripts Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Catgs
-set tags=tags;
-set autochdir
+" Plugin catgs, taglist
+"set tags=tags
+"set autochdir
 
-let g:ctags_statusline=1
-let generate_tags=1
+"let g:ctags_statusline=1
+"let generate_tags=1
 let Tlist_Use_Horiz_Window=0
-map <F4> : TlistToggle<cr>
-let Tlist_Use_Right_Window=1
+map <F1> : TlistToggle<cr>
+let Tlist_Show_One_File=1               "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Use_Right_Window=1            "在右侧窗口中显示taglist窗口
 let Tlist_Compact_Format=1
-let Tlist_Exit_OnlyWindow=1
+let Tlist_Exit_OnlyWindow=1             "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_GainFocus_On_ToggleOpen=1
 let Tlist_File_Fold_Auto_Close=1
 
-" vim markdown
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} set filetype=mkd
-let g:vim_markdown_folding_disabled=1
-let g:vim_markdown_frontmatter=1
+" Plugin indentLine settings.
+let g:indentLine_char = "¦"
+let g:indentLine_enabled = 1
+let g:autopep8_disable_show_diff=1
+map <C-i> :IndentLinesToggle<CR> 
 
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+" Plugin syntastic settings.
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = {'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': []}
+
+" Use pylint to check python files.
+let g:syntastic_python_checkers = ['pylint']
+map <F11> :SyntasticToggleMode<CR> :SyntasticCheck<CR>
+" Ignore warnings about newlines trailing.
+let g:syntastic_quiet_messages = { 'regex': ['trailing-newlines', 'invalid-name',
+    \'too-many-lines', 'too-many-instance-attributes', 'too-many-public-methods',
+    \'too-many-locals', 'too-many-branches'] }
+
+" Plugin nerdtree settings.
+map <F2> :NERDTreeToggle<CR>
+let NERDTreeChDirMode=1
+let NERDTreeShowBookmarks=1
+"let NERDTreeWinSize=25
+let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=0 
-let NERDTreeShowBookmarks=1 
-nmap <F3> :NERDTreeToggle<CR>
+let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '\.git$']
 
+" Plugin CtrlP
+map <C-p> :CtrlP<CR>
+
+" Plugin SimpylFold
 let g:SimpylFold_docstring_preview = 1
 
-"autocomplete YouCompleteMe
+" Plugin YouCompleteMe
 "let g:ycm_autoclose_preview_window_after_completion=1
 "map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" Plugin vim-airline
+let g:airline_theme="solarized" 
+let g:airline_powerline_fonts = 1   
+
+"打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+"设置切换Buffer快捷键"
+nnoremap <C-tab> :bn<CR>
+nnoremap <C-s-tab> :bp<CR>
+" 关闭状态显示空白符号计数
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
+
 
 "I don't like swap files
 set noswapfile
@@ -374,7 +422,7 @@ set noswapfile
 set foldmethod=syntax
 set foldlevelstart=99
 
-"vim-fugitive for git
+" Plugin vim-fugitive for git
 set laststatus=2 " Always display the status line
 set statusline+=%{fugitive#statusline()} "  Git Hotness
 
