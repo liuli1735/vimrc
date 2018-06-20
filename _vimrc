@@ -4,7 +4,7 @@
 "       http://liuli.me
 "
 " Version: 
-"       0.1 - 23/07/16 02:13:36
+"       0.2 - 20/06/18 18:05:36
 "
 " Descript:
 "       Mostly get from http://amix.dk/vim/vimrc.html and https://github.com/j1z0/vim-config/blob/master/vimrc, thanks!
@@ -37,18 +37,17 @@
 set nocompatible
 filetype off
 
-set rtp+=$VIM/vimfiles/bundle/Vundle.vim 
-call vundle#rc('$VIM/vimfiles/bundle/')  
+set rtp+=~/.vim/bundle/Vundle.vim 
+call vundle#rc('~/.vim/bundle/')  
 
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'drmingdrmer/xptemplate'
-Plugin 'ctags.exe'
 Plugin 'taglist.vim'
-Plugin 'Vim-R-plugin'
 
 "git interface
 Plugin 'tpope/vim-fugitive'
+Plugin 'screen.vim'
 
 "filesystem
 Plugin 'scrooloose/nerdtree'
@@ -59,6 +58,10 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'Yggdroot/indentLine'
 Plugin 'scrooloose/syntastic'
+
+"R plugin
+"Bundle 'Vim-R-plugin'
+Plugin 'jalvesaq/Nvim-R'
 
 "buffer
 Plugin 'bling/vim-airline'
@@ -91,14 +94,15 @@ set nu
 set autoread
 
 "max size 
-au GUIEnter * simalt ~x 
+"au GUIEnter * simalt ~x 
+set lines=999 columns=999
 
-cd C:\Users\Li\workspace
+cd ~/Workspace
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = ","
-let g:mapleader = ","
+let maplocalleader = "\\"
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -175,12 +179,13 @@ set fileencoding=utf-8
 syntax enable
 
 "set guifont=Consolas:h11
-set guifont=Consolas\ for\ Powerline\ FixedD:h11
-set guifontwide=Yahei_Mono:h11
+set guifont=Meslo\ LG\ S\ for\ Powerline:h13
+set guifontwide=Monaco:h13
 
 if has('gui_running')
-  set background=dark
-  colorscheme solarized
+  "set background=dark
+  "colorscheme solarized
+  set guioptions=         ""隐藏全部
 else
   colorscheme Zenburn
 endif
@@ -385,7 +390,7 @@ let g:SimpylFold_docstring_preview = 1
 
 " Plugin YouCompleteMe
 "let g:ycm_autoclose_preview_window_after_completion=1
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Plugin vim-airline
 let g:airline_theme="solarized" 
@@ -398,6 +403,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 "设置切换Buffer快捷键"
 nnoremap <C-tab> :bn<CR>
 nnoremap <C-s-tab> :bp<CR>
+
 " 关闭状态显示空白符号计数
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#whitespace#symbol = '!'
@@ -407,14 +413,23 @@ if !exists('g:airline_symbols')
 endif
 
 " unicode symbols
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
-
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒 '
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
 
 "I don't like swap files
 set noswapfile
@@ -425,6 +440,13 @@ set foldlevelstart=99
 " Plugin vim-fugitive for git
 set laststatus=2 " Always display the status line
 set statusline+=%{fugitive#statusline()} "  Git Hotness
+
+" Vim-R-plugin
+let maplocalleader = ","
+vmap <Space> <Plug>RDSendSelection
+nmap <Space> <Plug>RDSendLine
+let R_applescript = 1
+let R_assign = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Python Settings
