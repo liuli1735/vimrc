@@ -1,10 +1,10 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
 "       Liu Li
-"       http://liuli.me
+"       http://liuli1735.github.io/
 "
 " Version: 
-"       0.2 - 20/06/18 18:05:36
+"       1.0 - 21/04/24 12:08:36
 "
 " Descript:
 "       Mostly get from http://amix.dk/vim/vimrc.html and https://github.com/j1z0/vim-config/blob/master/vimrc, thanks!
@@ -172,7 +172,6 @@ set clipboard+=unnamed
 " Enable syntax highlighting
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf-8
-lang messages zh_CN.UTF-8
 set fileencodings=ucs-bom,utf-8,chinese,latin-1
 set fileencoding=utf-8
 
@@ -200,12 +199,12 @@ if has("gui_running")
     set guitablabel=%M\ %t
 endif
 
-set helplang=cn
+"set helplang=cn
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 
-set langmenu=zh_CN.UTF-8
-language messages zh_CN.utf-8
+set langmenu=en_US.UTF-8    ""zh_CN.UTF-8
+language messages en_US.UTF-8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
