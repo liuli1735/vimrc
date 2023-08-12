@@ -4,7 +4,7 @@
 "       http://liuli1735.github.io/
 "
 " Version: 
-"       1.0 - 21/04/24 12:08:36
+"       1.1 - 23/08/12 22:50:36
 "
 " Descript:
 "       Mostly get from http://amix.dk/vim/vimrc.html and https://github.com/j1z0/vim-config/blob/master/vimrc, thanks!
@@ -35,7 +35,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "vundle
 set nocompatible
-filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim 
 call vundle#rc('~/.vim/bundle/')  
@@ -79,13 +78,15 @@ Plugin 'jnurmine/Zenburn'
 
 call vundle#end()
 
-filetype plugin indent on    " enables filetype detection
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
-set history=700
+set history=500
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
 
 "turn on numbering
 set nu
@@ -468,7 +469,7 @@ au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " Wrap text after a certain number of characters
-au BufRead,BufNewFile *.py,*.pyw, set textwidth=100
+au BufRead,BufNewFile *.py,*.pyw, set textwidth=80
 
 " Use UNIX (\n) line endings.
 au BufNewFile *.py,*.pyw,*.c,*.h set fileformat=unix
